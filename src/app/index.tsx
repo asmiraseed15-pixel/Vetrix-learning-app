@@ -1,58 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+
+import React from "react";
 import {
-  Animated,
-  Dimensions,
   Pressable,
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 
-const { width, height } = Dimensions.get("window");
-
 export default function Index() {
-  const [showEnter, setShowEnter] = useState(false);
-
-  const logoScale = useRef(new Animated.Value(0.7)).current;
-  const logoOpacity = useRef(new Animated.Value(0)).current;
-  const taglineOpacity = useRef(new Animated.Value(0)).current;
-  const buttonOpacity = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.sequence([
-      Animated.parallel([
-        Animated.timing(logoOpacity, {
-          toValue: 1,
-          duration: 900,
-          useNativeDriver: true,
-        }),
-        Animated.spring(logoScale, {
-          toValue: 1,
-          friction: 5,
-          tension: 45,
-          useNativeDriver: true,
-        }),
-      ]),
-
-      Animated.timing(taglineOpacity, {
-        toValue: 1,
-        duration: 900,
-        useNativeDriver: true,
-      }),
-
-      Animated.delay(500),
-
-      Animated.timing(buttonOpacity, {
-        toValue: 1,
-        duration: 700,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      setShowEnter(true);
-    });
-  }, []);
+  const { width, height } = useWindowDimensions();
 
   const handleEnter = () => {
     router.push("/auth");
@@ -63,38 +22,28 @@ export default function Index() {
       colors={["#050816", "#10152F", "#17104A"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={styles.container}
+      style={[styles.container, { minHeight: height, width }]}
     >
-      {/* Decorative circles */}
+      {/* Decorative background circles */}
+      <View pointerEvents="none" style={styles.circleOne} />
+      <View pointerEvents="none" style={styles.circleTwo} />
+      <View pointerEvents="none" style={styles.circleThree} />
 
-      <View style={styles.circleOne} />
-      <View style={styles.circleTwo} />
-      <View style={styles.circleThree} />
-
+      {/* Main content */}
       <View style={styles.content}>
-        <Animated.View
-          style={{
-            opacity: logoOpacity,
-            transform: [{ scale: logoScale }],
-          }}
-        >
-          <View style={styles.logoBox}>
-            <Text style={styles.logoV}>V</Text>
-          </View>
+        {/* VETRIX Logo */}
+        <View style={styles.logoBox}>
+          <Text style={styles.logoV}>V</Text>
+        </View>
 
-          <Text style={styles.logoText}>VETRIX</Text>
+        <Text style={styles.logoText}>VETRIX</Text>
 
-          <Text style={styles.brandText}>by Vetri Technology</Text>
-        </Animated.View>
+        <Text style={styles.brandText}>
+          by Vetri Technology
+        </Text>
 
-        <Animated.View
-          style={[
-            styles.taglineContainer,
-            {
-              opacity: taglineOpacity,
-            },
-          ]}
-        >
+        {/* Tagline */}
+        <View style={styles.taglineContainer}>
           <Text style={styles.tagline}>
             A new world awaits.
           </Text>
@@ -106,17 +55,13 @@ export default function Index() {
           <Text style={styles.description}>
             Learn. Practice. Connect. Play. Grow.
           </Text>
-        </Animated.View>
+        </View>
 
-        <Animated.View
-          style={[
-            styles.buttonContainer,
-            {
-              opacity: buttonOpacity,
-            },
-          ]}
-        >
+        {/* Enter button */}
+        <View style={styles.buttonContainer}>
           <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Enter VETRIX"
             onPress={handleEnter}
             style={({ pressed }) => [
               styles.enterButton,
@@ -137,9 +82,10 @@ export default function Index() {
           <Text style={styles.bottomText}>
             Your learning journey starts here.
           </Text>
-        </Animated.View>
+        </View>
       </View>
 
+      {/* Footer */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           LEARN • PRACTICE • EVOLVE
@@ -151,18 +97,18 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    minHeight: height,
-    width,
+    flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
+    paddingVertical: 40,
   },
 
   content: {
     width: "100%",
     alignItems: "center",
-    paddingHorizontal: 30,
+    paddingHorizontal: 24,
+    zIndex: 1,
   },
 
   logoBox: {
@@ -202,7 +148,7 @@ const styles = StyleSheet.create({
   },
 
   brandText: {
-    color: "rgba(255,255,255,0.55)",
+    color: "rgba(255,255,255,0.7)",
     fontSize: 12,
     letterSpacing: 2,
     textAlign: "center",
@@ -210,12 +156,12 @@ const styles = StyleSheet.create({
   },
 
   taglineContainer: {
-    marginTop: 65,
+    marginTop: 48,
     alignItems: "center",
   },
 
   tagline: {
-    color: "rgba(255,255,255,0.88)",
+    color: "rgba(255,255,255,0.9)",
     fontSize: 25,
     fontWeight: "600",
     textAlign: "center",
@@ -230,15 +176,15 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    color: "rgba(255,255,255,0.55)",
+    color: "rgba(255,255,255,0.7)",
     fontSize: 13,
     marginTop: 18,
-    letterSpacing: 1,
+    letterSpacing: 0.5,
     textAlign: "center",
   },
 
   buttonContainer: {
-    marginTop: 65,
+    marginTop: 48,
     alignItems: "center",
   },
 
@@ -276,20 +222,23 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    color: "rgba(255,255,255,0.45)",
+    color: "rgba(255,255,255,0.65)",
     fontSize: 12,
     marginTop: 17,
+    textAlign: "center",
   },
 
   footer: {
     position: "absolute",
     bottom: 28,
+    alignSelf: "center",
   },
 
   footerText: {
-    color: "rgba(255,255,255,0.28)",
+    color: "rgba(255,255,255,0.55)",
     fontSize: 9,
     letterSpacing: 3,
+    textAlign: "center",
   },
 
   circleOne: {
