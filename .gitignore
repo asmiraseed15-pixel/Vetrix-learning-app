@@ -1,0 +1,76 @@
+# Node dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native build files
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+/ios
+/android
+
+# Metro and debug logs
+.metro-health-check*
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python and Django
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+venv/
+.venv/
+env/
+**/venv/
+**/.venv/
+.python-version
+
+# Local database files
+*.sqlite3
+db.sqlite3
+
+# Django generated files
+staticfiles/
+media/
+
+# Python testing and cache
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+
+# Local Claude settings
+.claude/
