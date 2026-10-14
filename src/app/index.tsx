@@ -22,7 +22,13 @@ export default function Index() {
       colors={["#050816", "#10152F", "#17104A"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={[styles.container, { minHeight: height, width }]}
+      style={[
+        styles.container,
+        {
+          width,
+          minHeight: height,
+        },
+      ]}
     >
       {/* Decorative background circles */}
       <View pointerEvents="none" style={styles.circleOne} />
@@ -31,7 +37,7 @@ export default function Index() {
 
       {/* Main content */}
       <View style={styles.content}>
-        {/* VETRIX Logo */}
+        {/* Logo */}
         <View style={styles.logoBox}>
           <Text style={styles.logoV}>V</Text>
         </View>
@@ -120,7 +126,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.08)",
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
     shadowColor: "#8B5CF6",
     shadowOpacity: 0.5,
     shadowRadius: 25,

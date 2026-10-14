@@ -1,7 +1,8 @@
+
 import React from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useFonts } from "expo-font";
+import { useFonts } from "@expo-google-fonts/inter";
 
 import {
   Inter_400Regular,
@@ -22,32 +23,25 @@ import {
   useTheme,
 } from "../context/ThemeContext";
 
-// ==================== APP NAVIGATION ====================
-
 function AppNavigation() {
   const { mode, backgroundColor } = useTheme();
 
   return (
     <>
-      <StatusBar
-        style={mode === "dark" ? "light" : "dark"}
-        
-      />
+      <StatusBar style={mode === "dark" ? "light" : "dark"} />
 
       <Stack
         screenOptions={{
           headerShown: false,
-          animation: "fade",
+          animation: "none",
           contentStyle: {
-            backgroundColor,
+            backgroundColor: backgroundColor || "#050816",
           },
         }}
       />
     </>
   );
 }
-
-// ==================== ROOT LAYOUT ====================
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -61,10 +55,7 @@ export default function RootLayout() {
   if (!fontsLoaded && !fontError) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator
-          size="large"
-          color="#8B5CF6"
-        />
+        <ActivityIndicator size="large" color="#8B5CF6" />
       </View>
     );
   }
@@ -76,11 +67,10 @@ export default function RootLayout() {
   );
 }
 
-// ==================== STYLES ====================
-
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
+    minHeight: "100%",
     backgroundColor: "#050816",
     alignItems: "center",
     justifyContent: "center",
